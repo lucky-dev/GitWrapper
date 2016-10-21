@@ -1,0 +1,8 @@
+#!/bin/bash
+
+INSTALL_DIR="/usr/local/bin"
+URL="https://raw.githubusercontent.com/lucky-dev/GetMyleGitWrapper/master/gm"
+
+curl $URL --output "${INSTALL_DIR}/gm"
+
+sudo chmod a+x "${INSTALL_DIR}/gm"

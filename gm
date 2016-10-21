@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Command to create a new branch for a new task
+if [ "$1" == "create" ]; then
+	if ! [ -z "$2" ]; then		
+		if git branch -v | grep -Eq "$2"; then
+			git checkout $2
+		else
+			git fetch && git checkout -b $2 origin/master
+		fi
+	else
+		echo "No name for a new branch" >&2
+		exit 1
+	fi
+# Command to update the local branch for a new task
+elif [ "$1" == "complete" ]; then
+	if ! [ -z "$2" ]; then
+		if git branch -v | grep -Eq "$2"; then
+			git checkout $2 && git fetch && git rebase origin/master
+		else
+			echo "No such branch" >&2
+			exit 1
+		fi
+	else
+		echo "No name for branch" >&2
+		exit 1
+	fi
+# Use git as default handler of commands
+else
+	git $*
+fi
